@@ -4,19 +4,23 @@ import java.util.HashMap;
 
 
 public class Product extends Category{
-	Double price;
-	HashMap<Integer,Double> quantityLevels;
-	Double currentQuantity;
+	protected static int idMax = 0;
+	protected int id;
+	protected Double price;
+	protected HashMap<Integer,Double> quantityLevels;
+	protected Double currentQuantity;
 
 	public Product(String n) {
 		super(n);
 		quantityLevels = new HashMap<Integer,Double>();
+		id = idMax+1;
 	}
 	
 	public Product(String n, Double p) {
 		super(n);
 		this.price = p;
 		quantityLevels = new HashMap<Integer,Double>();
+		id = idMax+1;
 	}
 	
 	public Product(String n, Double p, Double currentQ) {
@@ -24,8 +28,37 @@ public class Product extends Category{
 		this.price = p;
 		this.currentQuantity = currentQ;
 		quantityLevels = new HashMap<Integer,Double>();
+		id = idMax+1;
 	}
 	
+	/**
+	 * @return the idMax
+	 */
+	public static int getIdMax() {
+		return idMax;
+	}
+
+	/**
+	 * @param idMax the idMax to set
+	 */
+	public static void setIdMax(int idMax) {
+		Product.idMax = idMax;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		id = id;
+	}
+
 	public Double getPrice() {
 		return price;
 	}
@@ -60,6 +93,10 @@ public class Product extends Category{
 
 	public Double getCurrentQuantity() {
 		return currentQuantity;
+	}
+	
+	public void setCurrentQuantity(double q){
+		currentQuantity = q;
 	}
 
 	public double getQuantityLevelOnDate(int d) {

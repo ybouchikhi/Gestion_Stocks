@@ -9,21 +9,22 @@ import javax.swing.*;
 
 
 
-public class AddProductWindow extends JFrame implements ActionListener{
+public class ModifyProductWindow extends JFrame implements ActionListener{
+        
                 StructureManagerWindow manager;
-                Category cat;
+                Product produit;
                 JButton okButton, cancelButton;
                 JTextField nameTF, priceTF, quantityTF;
                 JLabel nameLabel, priceLabel, quantityLabel;
 
 
-        public AddProductWindow(StructureManagerWindow manager, Category cat){
+        public ModifyProductWindow(StructureManagerWindow manager, Product produit){
                         super();
-                        //This window is used to add a product in the category cat
+                        //This window is used to modify a product in the category cat
                 this.manager = manager;
-                this.cat = cat;
+                this.produit = produit;
                         
-                setTitle("Ajout d'un nouveau Produit");
+                setTitle("Modification du produit");
                 setSize(500, 130);
                 setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 setVisible(true);
@@ -43,11 +44,13 @@ public class AddProductWindow extends JFrame implements ActionListener{
                 
                 nameLabel = new JLabel("Nom:");
                 nameLabel.setVisible(true);
+                
                 panel.add(nameLabel);
                 
                 nameTF = new JTextField();
                 nameTF.setPreferredSize(new Dimension(150,30));
                 nameTF.setVisible(true);
+                nameTF.setText(produit.getName());
                 panel.add(nameTF);
                 
                 priceLabel = new JLabel("Prix:");
@@ -57,6 +60,8 @@ public class AddProductWindow extends JFrame implements ActionListener{
                 priceTF = new JTextField();
                 priceTF.setPreferredSize(new Dimension(150,30));
                 priceTF.setVisible(true);
+                priceTF.setText(String.valueOf(produit.getPrice()));
+                
                 panel.add(priceTF);
                 
                 quantityLabel = new JLabel("Quantite");
@@ -66,11 +71,12 @@ public class AddProductWindow extends JFrame implements ActionListener{
                 quantityTF = new JTextField();
                 quantityTF.setPreferredSize(new Dimension(150,30));
                 quantityTF.setVisible(true);
+                quantityTF.setText(String.valueOf(produit.getCurrentQuantity()));
                 panel.add(quantityTF);
                 
                 
                 
-                okButton = new JButton("Ajouter le produit");
+                okButton = new JButton("Enregistrer les modifs");
                 okButton.setVisible(true);
                 okButton.addActionListener(this);
                 panel.add(okButton);
@@ -89,7 +95,7 @@ public class AddProductWindow extends JFrame implements ActionListener{
                         if(e.getSource() == okButton){
                                 String name = nameTF.getText();
                                 if(name.length()==0){
-                                        JOptionPane.showMessageDialog(this, "Erreur: le nom du produit ne peut pas être vide.", "Erreur entrée utilisateur",
+                                        JOptionPane.showMessageDialog(this, "Erreur: le nom du produit ne peut pas etre vide.", "Erreur entree utilisateur",
                                                         JOptionPane.ERROR_MESSAGE);
                                 }
                                 else{
@@ -97,12 +103,15 @@ public class AddProductWindow extends JFrame implements ActionListener{
                                         try{
                                                 price = Double.parseDouble(priceTF.getText());
                                                 quantity = Double.parseDouble(quantityTF.getText());
-                                                manager.addProduct(cat, new Product(name, price, quantity));
+                                               
+                                                produit.setName(name);
+                                                produit.setPrice(price);
+                                                produit.setCurrentQuantity(quantity);
                                                 manager.updateTree();
                                                 dispose();
                                         }
                                         catch(NumberFormatException exception){
-                                                JOptionPane.showMessageDialog(this, "Erreur: le prix et la quantite doivent etre de type numerique.", "Erreur entrée utilisateur",
+                                                JOptionPane.showMessageDialog(this, "Erreur: le prix et la quantite doivent etre de type numerique.", "Erreur entree utilisateur",
                                                                                                         JOptionPane.ERROR_MESSAGE);
                                         }
                                 }
@@ -110,5 +119,6 @@ public class AddProductWindow extends JFrame implements ActionListener{
                         else if(e.getSource() == cancelButton){
                                 dispose();
                         }
-                }
+        }
 }
+
