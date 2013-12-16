@@ -1,14 +1,25 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 
 public class SimulationTest {
-
+	Simulation simulation;
+	Product product;
+	Product product2;
+	Category cat;
 	@Before
 	public void setUp() throws Exception {
+		
+		simulation= new Simulation();
+		product= new Product("Banane");
+		cat=new Category("fruits");
+		product2= new Product("fraise",3.0, 200.0);
 	}
 
 	@After
@@ -17,67 +28,98 @@ public class SimulationTest {
 
 	@Test
 	public void testSimulation() {
-		fail("Not yet implemented");
+		
+		assertNotNull(simulation);
 	}
 
 	@Test
 	public void testGetListOfProducts() {
-		fail("Not yet implemented");
+		assertFalse(simulation.getListOfProducts()==null);
 	}
 
 	@Test
 	public void testSetListOfProducts() {
-		fail("Not yet implemented");
+		List<Product> TestList = new ArrayList<Product>() ;
+		TestList.add(product);
+		simulation.setListOfProducts(TestList);
+		assertEquals(simulation.listOfProducts, TestList);
 	}
 
 	@Test
 	public void testAddProduct() {
-		fail("Not yet implemented");
+		simulation.addProduct(product);
+		assertEquals(simulation.listOfProducts.get(simulation.listOfProducts.size()-1), product);
 	}
 
 	@Test
 	public void testRemoveProduct() {
-		fail("Not yet implemented");
+		simulation.addProduct(product);
+		simulation.removeProduct(product);
+		assertEquals(simulation.listOfProducts.size(),0);
 	}
 
 	@Test
 	public void testAddProductsOfCategory() {
-		fail("Not yet implemented");
+		Simulation simulation= new Simulation();
+		Product productpomme= new Product("pomme");
+		cat.addChild(productpomme);
+		cat.addChild(product);
+		simulation.addProductsOfCategory(cat);
+		assertEquals(simulation.listOfProducts.get(0), productpomme);
+		assertEquals(simulation.listOfProducts.get(1), product);
+		
 	}
 
 	@Test
-	public void testSimulationStep() {
-		fail("Not yet implemented");
+	public void testRun() {
+		
+	}
+
+	@Test
+	public void testSimulationStep() throws QuantityHigherThanAvailabilityException {
+		simulation.listOfProducts.add(product2);
+		simulation.active=true; //supposons que la simulation tourne
+	simulation.simulationStep();
+	assertTrue(product2.quantityLevels!=null); //si la méthode n'a pas marché quantityLevels reste egal à null
+	assertTrue(simulation.simulationDate!=0);//si la méthode n'a pas marché datesimulation reste egal à 0
+	
 	}
 
 	@Test
 	public void testGetSimulationDate() {
-		fail("Not yet implemented");
+		simulation.simulationDate=3;
+		assertEquals(simulation.simulationDate, 3);
 	}
 
 	@Test
 	public void testSetSimulationDate() {
-		fail("Not yet implemented");
+	simulation.setSimulationDate(5);
+	assertEquals(simulation.simulationDate, 5);
 	}
 
 	@Test
 	public void testGetSimulationSpeed() {
-		fail("Not yet implemented");
+		assertEquals(simulation.simulationSpeed, 3);
 	}
 
 	@Test
 	public void testStartPause() {
-		fail("Not yet implemented");
+		simulation.active=true; //
+		assertEquals(simulation.startPause(), false);
 	}
 
 	@Test
 	public void testStopSimulation() {
-		fail("Not yet implemented");
+		simulation.startPause();
+		simulation.stopSimulation();
+		assertEquals(simulation.active, false);
+		
 	}
 
 	@Test
 	public void testSetSimulationSpeed() {
-		fail("Not yet implemented");
+		simulation.setSimulationSpeed(10);
+		assertEquals(simulation.simulationSpeed, 10);
 	}
 
 }
