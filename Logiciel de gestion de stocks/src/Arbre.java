@@ -46,15 +46,6 @@ public class Arbre extends JTree{
 	}
 
 
-
-	public DefaultMutableTreeNode findNode(Category cat){
-
-		DefaultMutableTreeNode del = new DefaultMutableTreeNode();
-		return del;
-		/*
-		 * a completer
-		 */
-	}
 	
 	public void updateTree(){
 		node = buildTree(rootCategory);
